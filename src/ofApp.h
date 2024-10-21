@@ -25,12 +25,14 @@ public:
 	void dragEvent(ofDragInfo dragInfo);
 	void gotMessage(ofMessage msg);
 
+	void getRigidBodyInfoFromNatNet();
+	void updateRigidBodyInformation();
+
 	ofxNatNet natnet;
 	ofEasyCam cam;
 	float rotateDeg;
 	ofVec3f pos;
 
-	// vector of the rigidbodyinfo
-	//vector<RigidBodyInfo> rigidBodies;
+	// RigidBody information managed by map with streaming ID
 	map<int, RigidBodyInfo> rigidBodies;
 };
