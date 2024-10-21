@@ -4,3 +4,5 @@ obj
 *.vcxproj
 *.vcxproj.filters
 *.vcxproj.user
+bin
+!data/*
