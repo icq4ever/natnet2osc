@@ -1,20 +1,21 @@
 #include "ofApp.h"
 
 //--------------------------------------------------------------
-void ofApp::setup(){
+void ofApp::setup() {
 	ofSetFrameRate(60);
 	ofSetVerticalSync(true);
 	ofBackground(0);
 
 	// init NatNet setup
 	// local network device ip addr
-	string localIPAddr = "192.168.100.102";
+	string localIPAddr = "192.168.100.100";
 	natnet.setup(localIPAddr, "192.168.100.3");
 	natnet.setScale(100);
 	natnet.setDuplicatedPointRemovalDistance(20);
 	natnet.forceSetNatNetVersion(3, 1);
 
-	
+	// set ortho cam
+	cam.enableOrtho();
 }
 
 void ofApp::getRigidBodyInfoFromNatNet() {
@@ -39,8 +40,10 @@ void ofApp::updateRigidBodyInformation() {
 			// active status
 			iter->second.setActiveStatus(RB.isActive());
 
-			// matrix
-			iter->second.updateMatrix(RB.getMatrix());
+			// matrix convertion from natnet to world 
+			ofMatrix4x4 mat = RB.getMatrix();
+			mat.rotate(180, 0, 1, 1);
+			iter->second.updateMatrix(mat);
 		}
 	}
 }
@@ -102,14 +105,22 @@ void ofApp::draw(){
 	drawGridOneColor(100, 100, true, true, true, true);
 	ofPopStyle();
 
-	for (int i = -100; i < 100; i++) {
-	}
-
+	// draw Boundary
+	ofPushMatrix();
+	ofPushStyle();
+	ofSetColor(ofColor::fromHex(0xFFFF00));
+	ofNoFill();
+	ofSetLineWidth(3);
+	ofRotateZ(45);
+	ofDrawRectangle(-400, -400, 800, 800);
+	ofPopStyle();
+	ofPopMatrix();
 	// draw rigidBodies
 	for (auto iter = rigidBodies.begin(); iter != rigidBodies.end(); iter++) {
 		if (iter->second.getActive()) {
 			ofPushMatrix();
 			{
+				//ofQuaternion()
 				glMultMatrixf(iter->second.getMatrix().getPtr());
 				ofPushStyle();
 				{
