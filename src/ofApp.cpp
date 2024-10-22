@@ -14,7 +14,7 @@ void ofApp::setup(){
 	natnet.setDuplicatedPointRemovalDistance(20);
 	natnet.forceSetNatNetVersion(3, 1);
 
-	getRigidBodyInfoFromNatNet();
+	
 }
 
 void ofApp::getRigidBodyInfoFromNatNet() {
@@ -29,7 +29,7 @@ void ofApp::getRigidBodyInfoFromNatNet() {
 }
 
 void ofApp::updateRigidBodyInformation() {
-	natnet.update();
+	cout << rigidBodies.size() << endl;
 	for (int i = 0; i < natnet.getNumRigidBody(); i++) {
 		const ofxNatNet::RigidBody& RB = natnet.getRigidBodyAt(i);
 
@@ -47,10 +47,16 @@ void ofApp::updateRigidBodyInformation() {
 
 //--------------------------------------------------------------
 void ofApp::update(){
+	getRigidBodyInfoFromNatNet();
 	updateRigidBodyInformation();
 
 	// get number of RigidBody
 	cout << "num of rigid body : " << natnet.getNumRigidBody() << endl;
+
+	for (auto iter = rigidBodies.begin(); iter != rigidBodies.end(); iter++) {
+		cout << iter->first << " : ";
+		cout << iter->second.getActive() << endl;
+	}
 }
 
 
@@ -62,6 +68,9 @@ void ofApp::draw(){
 
 	// draw world Axis
 	ofDrawAxis(100);
+
+	for (int i = -100; i < 100; i++) {
+	}
 
 	// draw rigidBodies
 	for (auto iter = rigidBodies.begin(); iter != rigidBodies.end(); iter++) {
@@ -84,7 +93,6 @@ void ofApp::draw(){
 			}
 			ofPopMatrix();
 		}
-		natnet.debugDrawInformation();
 	}
 
 	cam.end();
