@@ -8,13 +8,13 @@ void ofApp::setup(){
 
 	// init NatNet setup
 	// local network device ip addr
-	string localIPAddr = "192.168.100.102";
+	string localIPAddr = "192.168.100.116";
 	natnet.setup(localIPAddr, "192.168.100.3");
 	natnet.setScale(100);
 	natnet.setDuplicatedPointRemovalDistance(20);
 	natnet.forceSetNatNetVersion(3, 1);
 
-	
+	oscSender.setupDestinations({{"localhost", 3000}});
 }
 
 void ofApp::getRigidBodyInfoFromNatNet() {
@@ -45,10 +45,20 @@ void ofApp::updateRigidBodyInformation() {
 	}
 }
 
+void ofApp::sendRigidBodyInformation() {
+	for(auto &&rb : rigidBodies) {
+		if(!rb.second.getActive()) {
+			continue;
+		}
+		oscSender.send(rb.first, rb.second, true);
+	}
+}
+
 //--------------------------------------------------------------
 void ofApp::update(){
 	getRigidBodyInfoFromNatNet();
 	updateRigidBodyInformation();
+	sendRigidBodyInformation();
 
 	// get number of RigidBody
 	cout << "num of rigid body : " << natnet.getNumRigidBody() << endl;

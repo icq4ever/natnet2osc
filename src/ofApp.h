@@ -3,6 +3,7 @@
 #include "ofMain.h"
 #include "ofxNatNet.h"
 #include "RigidBodyInfo.h"
+#include "OSCSending.h"
 
 #define MAX_RIGID_BODY	3
 
@@ -27,6 +28,7 @@ public:
 
 	void getRigidBodyInfoFromNatNet();
 	void updateRigidBodyInformation();
+	void sendRigidBodyInformation();
 
 	ofxNatNet natnet;
 	ofEasyCam cam;
@@ -35,4 +37,6 @@ public:
 
 	// RigidBody information managed by map with streaming ID
 	map<int, RigidBodyInfo> rigidBodies;
+	
+	OSCSending oscSender;
 };
