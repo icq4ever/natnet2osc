@@ -14,6 +14,8 @@ void ofApp::setup() {
 	natnet.setDuplicatedPointRemovalDistance(20);
 	natnet.forceSetNatNetVersion(3, 1);
 
+	ofSetCircleResolution(180);
+
 	// set ortho cam
 	cam.enableOrtho();
 }
@@ -121,13 +123,15 @@ void ofApp::draw(){
 			ofPushMatrix();
 			{
 				ofTranslate(iter->second.getPosition().x, iter->second.getPosition().y);
-				ofSetColor(255);
+				if (iter->first == 1)	ofSetColor(ofColor::orange);
+				else if (iter->first == 2)	ofSetColor(ofColor::greenYellow);
+				else						ofSetColor(ofColor::cyan);
+
+				//ofSetColor(255);
 				ofFill();
-				ofDrawCircle(0, 0, 100);
+				ofDrawCircle(0, 0, 70);
 			}
 			ofPopMatrix();
-
-
 
 			ofPushMatrix();
 			{
