@@ -54,85 +54,79 @@ void OSCSending::send(int ID, const RigidBodyInfo &rb, bool as_bundle)
 	address.push_back("rigidbody");
 	address.push_back(ofToString(ID));
 	{
-		{
-			std::string method = makeOscAddress(address, "location2d");
-			ofVec2f data{location.x, location.y};
-			ofxOscMessage msg;
-			msg.setAddress(method);
-			msg.addFloatArg(data.x);
-			msg.addFloatArg(data.y);
-			procMessage(msg);
-		}
-		{
-			std::string method = makeOscAddress(address, "location3d");
-			ofVec3f data{location.x, location.y, location.z};
-			ofxOscMessage msg;
-			msg.setAddress(method);
-			msg.addFloatArg(data.x);
-			msg.addFloatArg(data.y);
-			msg.addFloatArg(data.z);
-			procMessage(msg);
-		}
-		{
-			std::string method = makeOscAddress(address, "height");
-			float data{location.y};
-			ofxOscMessage msg;
-			msg.setAddress(method);
-			msg.addFloatArg(data);
-			procMessage(msg);
-		}
+		std::string method = makeOscAddress(address, "location2d");
+		ofVec2f data{location.x, location.y};
+		ofxOscMessage msg;
+		msg.setAddress(method);
+		msg.addFloatArg(data.x);
+		msg.addFloatArg(data.y);
+		procMessage(msg);
 	}
 	{
-		{
-			std::string method = makeOscAddress(address, "orientation");
-			ofxOscMessage msg;
-			msg.setAddress(method);
-			msg.addFloatArg(orientation[0]);
-			msg.addFloatArg(orientation[1]);
-			msg.addFloatArg(orientation[2]);
-			msg.addFloatArg(orientation[3]);
-			procMessage(msg);
-		}
-		// may need some other conversion from quaternion to angles
-		ofVec3f euler = orientation.getEuler();
-		{
-			std::string method = makeOscAddress(address, "direction");
-			float data{euler.y};
-			ofxOscMessage msg;
-			msg.setAddress(method);
-			msg.addFloatArg(data);
-			procMessage(msg);
-		}
-		{
-			std::string method = makeOscAddress(address, "pitch");
-			float data{euler.x};
-			ofxOscMessage msg;
-			msg.setAddress(method);
-			msg.addFloatArg(data);
-			procMessage(msg);
-		}
-		{
-			std::string method = makeOscAddress(address, "eulerAngles");
-			ofVec3f data{euler.x, euler.y, euler.z};
-			ofxOscMessage msg;
-			msg.setAddress(method);
-			msg.addFloatArg(data.x);
-			msg.addFloatArg(data.y);
-			msg.addFloatArg(data.z);
-			procMessage(msg);
-		}
+		std::string method = makeOscAddress(address, "location3d");
+		ofVec3f data{location.x, location.y, location.z};
+		ofxOscMessage msg;
+		msg.setAddress(method);
+		msg.addFloatArg(data.x);
+		msg.addFloatArg(data.y);
+		msg.addFloatArg(data.z);
+		procMessage(msg);
 	}
 	{
-		{
-			std::string method = makeOscAddress(address, "matrix");
-			auto data = matrix.getPtr();
-			ofxOscMessage msg;
-			msg.setAddress(method);
-			for(int i = 0; i < 16; ++i) {
-				msg.addFloatArg(data[i]);
-			}
-			procMessage(msg);
+		std::string method = makeOscAddress(address, "height");
+		float data{location.y};
+		ofxOscMessage msg;
+		msg.setAddress(method);
+		msg.addFloatArg(data);
+		procMessage(msg);
+	}
+	{
+		std::string method = makeOscAddress(address, "orientation");
+		ofxOscMessage msg;
+		msg.setAddress(method);
+		msg.addFloatArg(orientation[0]);
+		msg.addFloatArg(orientation[1]);
+		msg.addFloatArg(orientation[2]);
+		msg.addFloatArg(orientation[3]);
+		procMessage(msg);
+	}
+	// may need some other conversion from quaternion to angles
+	ofVec3f euler = orientation.getEuler();
+	{
+		std::string method = makeOscAddress(address, "direction");
+		float data{euler.y};
+		ofxOscMessage msg;
+		msg.setAddress(method);
+		msg.addFloatArg(data);
+		procMessage(msg);
+	}
+	{
+		std::string method = makeOscAddress(address, "pitch");
+		float data{euler.x};
+		ofxOscMessage msg;
+		msg.setAddress(method);
+		msg.addFloatArg(data);
+		procMessage(msg);
+	}
+	{
+		std::string method = makeOscAddress(address, "eulerAngles");
+		ofVec3f data{euler.x, euler.y, euler.z};
+		ofxOscMessage msg;
+		msg.setAddress(method);
+		msg.addFloatArg(data.x);
+		msg.addFloatArg(data.y);
+		msg.addFloatArg(data.z);
+		procMessage(msg);
+	}
+	{
+		std::string method = makeOscAddress(address, "matrix");
+		auto data = matrix.getPtr();
+		ofxOscMessage msg;
+		msg.setAddress(method);
+		for(int i = 0; i < 16; ++i) {
+			msg.addFloatArg(data[i]);
 		}
+		procMessage(msg);
 	}
 	if(as_bundle) {
 		for(auto &&s : senders) {
