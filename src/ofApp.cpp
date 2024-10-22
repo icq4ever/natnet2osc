@@ -5,7 +5,7 @@ void ofApp::setup() {
 	ofSetFrameRate(60);
 	ofSetVerticalSync(true);
 	ofBackground(0);
-
+	
 	// init NatNet setup
 	// local network device ip addr
 	string localIPAddr = "192.168.100.100";
@@ -13,9 +13,11 @@ void ofApp::setup() {
 	natnet.setScale(100);
 	natnet.setDuplicatedPointRemovalDistance(20);
 	natnet.forceSetNatNetVersion(3, 1);
+	
+	oscSender.setupDestinations({{"localhost", 3000}});
 
 	ofSetCircleResolution(180);
-
+	
 	// set ortho cam
 	cam.enableOrtho();
 }
@@ -50,10 +52,20 @@ void ofApp::updateRigidBodyInformation() {
 	}
 }
 
+void ofApp::sendRigidBodyInformation() {
+	for(auto &&rb : rigidBodies) {
+		if(!rb.second.getActive()) {
+			continue;
+		}
+		oscSender.send(rb.first, rb.second, true);
+	}
+}
+
 //--------------------------------------------------------------
 void ofApp::update(){
 	getRigidBodyInfoFromNatNet();
 	updateRigidBodyInformation();
+	sendRigidBodyInformation();
 
 	// get number of RigidBody
 	cout << "num of rigid body : " << natnet.getNumRigidBody() << endl;

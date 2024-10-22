@@ -1,2 +1,4 @@
 ofxNatNet
+ofxOsc
 ofxPoco
+ofxWatcher

@@ -3,6 +3,7 @@
 #include "ofMain.h"
 #include "ofxNatNet.h"
 #include "RigidBodyInfo.h"
+#include "OSCSending.h"
 
 #define MAX_RIGID_BODY	3
 
@@ -28,6 +29,7 @@ public:
 	void drawGridOneColor(float stepSize, size_t numberOfSteps, bool labels, bool x, bool y, bool z);
 	void getRigidBodyInfoFromNatNet();
 	void updateRigidBodyInformation();
+	void sendRigidBodyInformation();
 
 	ofxNatNet natnet;
 	ofEasyCam cam;
@@ -36,4 +38,6 @@ public:
 
 	// RigidBody information managed by map with streaming ID
 	map<int, RigidBodyInfo> rigidBodies;
+	
+	OSCSending oscSender;
 };
