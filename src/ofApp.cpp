@@ -8,7 +8,7 @@ void ofApp::setup() {
 	
 	// init NatNet setup
 	// local network device ip addr
-	string localIPAddr = "192.168.100.100";
+	string localIPAddr = "192.168.100.116";
 	natnet.setup(localIPAddr, "192.168.100.3");
 	natnet.setScale(100);
 	natnet.setDuplicatedPointRemovalDistance(20);
@@ -57,7 +57,7 @@ void ofApp::sendRigidBodyInformation() {
 		if(!rb.second.getActive()) {
 			continue;
 		}
-		oscSender.send(rb.first, rb.second, true);
+		oscSender.send(rb.first, rb.second);
 	}
 }
 

@@ -42,7 +42,7 @@ void OSCSending::send(int ID, const RigidBodyInfo &rb, bool as_bundle)
 		}
 		else {
 			for(auto &&s : senders) {
-				s->sendMessage(msg);
+				s->sendMessage(msg, false);
 			}
 		}
 	};
@@ -74,7 +74,7 @@ void OSCSending::send(int ID, const RigidBodyInfo &rb, bool as_bundle)
 	}
 	{
 		std::string method = makeOscAddress(address, "height");
-		float data{location.y};
+		float data{location.z};
 		ofxOscMessage msg;
 		msg.setAddress(method);
 		msg.addFloatArg(data);
@@ -91,18 +91,38 @@ void OSCSending::send(int ID, const RigidBodyInfo &rb, bool as_bundle)
 		procMessage(msg);
 	}
 	// may need some other conversion from quaternion to angles
-	ofVec3f euler = orientation.getEuler();
+	ofVec3f axis = ofVec3f(0,0,1)*orientation;
+	ofVec2f xy{axis.x, axis.y};
 	{
 		std::string method = makeOscAddress(address, "direction");
-		float data{euler.y};
+		float data = ofRadToDeg(atan2(-xy.y, -xy.x)) + 180;
 		ofxOscMessage msg;
 		msg.setAddress(method);
 		msg.addFloatArg(data);
 		procMessage(msg);
 	}
 	{
+		std::string method = makeOscAddress(address, "eye2d");
+		ofVec2f data = xy.getNormalized();
+		ofxOscMessage msg;
+		msg.setAddress(method);
+		msg.addFloatArg(data.x);
+		msg.addFloatArg(data.y);
+		procMessage(msg);
+	}
+	{
+		std::string method = makeOscAddress(address, "eye3d");
+		ofVec3f data = axis;
+		ofxOscMessage msg;
+		msg.setAddress(method);
+		msg.addFloatArg(data.x);
+		msg.addFloatArg(data.y);
+		msg.addFloatArg(data.z);
+		procMessage(msg);
+	}
+	{
 		std::string method = makeOscAddress(address, "pitch");
-		float data{euler.x};
+		float data = ofRadToDeg(atan2(axis.z, xy.length()));
 		ofxOscMessage msg;
 		msg.setAddress(method);
 		msg.addFloatArg(data);
@@ -110,6 +130,7 @@ void OSCSending::send(int ID, const RigidBodyInfo &rb, bool as_bundle)
 	}
 	{
 		std::string method = makeOscAddress(address, "eulerAngles");
+		ofVec3f euler = orientation.getEuler();
 		ofVec3f data{euler.x, euler.y, euler.z};
 		ofxOscMessage msg;
 		msg.setAddress(method);
