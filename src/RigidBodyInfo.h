@@ -1,5 +1,7 @@
 #pragma once
-#include "ofApp.h"
+
+#include "ofMatrix4x4.h"
+#include "ofVec3f.h"
 
 class RigidBodyInfo{
 private:
@@ -24,24 +26,24 @@ public:
 		isActive = _b;
 	}
 
-	ofMatrix4x4 getMatrix() {
+	ofMatrix4x4 getMatrix() const {
 		return matrix;
 	}
-	ofVec3f getRotation() {
+	ofVec3f getRotation() const {
 		return ofVec3f(
 			matrix.getRotate().x(),
 			matrix.getRotate().y(),
 			matrix.getRotate().z());
 	};
 
-	ofVec3f getPosition() {
+	ofVec3f getPosition() const {
 		return ofVec3f(
 			matrix.getTranslation().x,
 			matrix.getTranslation().y,
 			matrix.getTranslation().z);
 	}
 
-	bool getActive() {
+	bool getActive() const {
 		return isActive;
 	}
 };
