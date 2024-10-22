@@ -59,7 +59,35 @@ void ofApp::update(){
 	}
 }
 
+void ofApp::drawGridOneColor(float stepSize, size_t numberOfSteps, bool labels, bool x, bool y, bool z) {
+	if (x) {
+		ofDrawGridPlane(stepSize, numberOfSteps, labels);
+	}
+	if (y) {
+		ofMatrix4x4 m;
+		m.makeRotationMatrix(90, 0, 0, -1);
+		ofPushMatrix();
+		ofMultMatrix(m);
+		ofDrawGridPlane(stepSize, numberOfSteps, labels);
+		ofPopMatrix();
+	}
+	if (z) {
+		ofMatrix4x4 m;
+		m.makeRotationMatrix(90, 0, 1, 0);
+		ofPushMatrix();
+		ofMultMatrix(m);
+		ofDrawGridPlane(stepSize, numberOfSteps, labels);
+		ofPopMatrix();
+	}
 
+	if (labels) {
+		float labelPos = stepSize * (numberOfSteps + 0.5);
+		//ofSetBitmapTextMode(OF_BITMAPMODE_MODEL_BILLBOARD);
+		ofDrawBitmapString("x", labelPos, 0, 0);
+		ofDrawBitmapString("y", 0, labelPos, 0);
+		ofDrawBitmapString("z", 0, 0, labelPos);
+	}
+}
 
 //--------------------------------------------------------------
 void ofApp::draw(){
@@ -68,6 +96,11 @@ void ofApp::draw(){
 
 	// draw world Axis
 	ofDrawAxis(100);
+
+	ofPushStyle();
+	ofSetColor(ofColor::fromHex(0xFFFFFF), 20);
+	drawGridOneColor(100, 100, true, true, true, true);
+	ofPopStyle();
 
 	for (int i = -100; i < 100; i++) {
 	}

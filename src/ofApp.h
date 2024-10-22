@@ -25,6 +25,7 @@ public:
 	void dragEvent(ofDragInfo dragInfo);
 	void gotMessage(ofMessage msg);
 
+	void drawGridOneColor(float stepSize, size_t numberOfSteps, bool labels, bool x, bool y, bool z);
 	void getRigidBodyInfoFromNatNet();
 	void updateRigidBodyInformation();
 
