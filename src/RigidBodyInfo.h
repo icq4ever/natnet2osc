@@ -34,11 +34,13 @@ public:
 			matrix.getRotate().z());
 	};
 
+	// should convert from natnet axis order to oF world axis
 	ofVec3f getPosition() {
 		return ofVec3f(
 			matrix.getTranslation().x,
 			matrix.getTranslation().y,
-			matrix.getTranslation().z);
+			matrix.getTranslation().z
+			);
 	}
 
 	bool getActive() {

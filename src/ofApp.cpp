@@ -120,6 +120,17 @@ void ofApp::draw(){
 		if (iter->second.getActive()) {
 			ofPushMatrix();
 			{
+				ofTranslate(iter->second.getPosition().x, iter->second.getPosition().y);
+				ofSetColor(255);
+				ofFill();
+				ofDrawCircle(0, 0, 100);
+			}
+			ofPopMatrix();
+
+
+
+			ofPushMatrix();
+			{
 				//ofQuaternion()
 				glMultMatrixf(iter->second.getMatrix().getPtr());
 				ofPushStyle();
