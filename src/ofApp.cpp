@@ -43,7 +43,8 @@ void ofApp::updateRigidBodyInformation() {
 		if (iter != rigidBodies.end()) {
 			// active status
 			iter->second.setActiveStatus(RB.isActive());
-
+			// rigidbody name
+			iter->second.updateName(RB.name);
 			// matrix convertion from natnet to world 
 			ofMatrix4x4 mat = RB.getMatrix();
 			mat.rotate(180, 0, 1, 1);

@@ -5,6 +5,7 @@
 
 class RigidBodyInfo{
 private:
+	std::string name;
 	ofMatrix4x4 matrix;
 	ofVec3f rotation;
 	ofVec3f position;
@@ -13,11 +14,16 @@ private:
 
 public:
 	RigidBodyInfo() {
+		name = "";
 		rotation = ofVec3f(0, 0, 0);
 		position = ofVec3f(0, 0, 0);
 		isActive = false;
 	}
 
+	void updateName(std::string _name) {
+		name = _name;
+	}
+	
 	void updateMatrix(ofMatrix4x4 _mat) {
 		matrix = _mat;
 	}
@@ -26,6 +32,9 @@ public:
 		isActive = _b;
 	}
 
+	std::string getName() const {
+		return name;
+	}
 	ofMatrix4x4 getMatrix() const {
 		return matrix;
 	}
