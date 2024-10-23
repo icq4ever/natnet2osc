@@ -12,7 +12,7 @@ void ofApp::setup() {
 	natnet.setup(localIPAddr, "192.168.100.3");
 	natnet.setScale(100);
 	natnet.setDuplicatedPointRemovalDistance(20);
-	natnet.forceSetNatNetVersion(3, 1);
+//	natnet.forceSetNatNetVersion(3, 1);
 	
 	oscSender.setupDestinations({{"localhost", 3000}});
 
