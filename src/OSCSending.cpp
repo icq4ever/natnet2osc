@@ -47,8 +47,13 @@ void OSCSending::send(int ID, const RigidBodyInfo &rb, bool as_bundle)
 		}
 	};
 	const ofMatrix4x4 &matrix = rb.getMatrix();
+	
 	ofVec3f location = matrix.getTranslation();
 	ofQuaternion orientation = matrix.getRotate();
+
+	ofMatrix4x4 matT = rb.getMatrix();
+	matT.rotate(-90, 0, 0, 1);
+	ofVec3f audioLocation = matT.getTranslation();
 
 	std::vector<std::string> address;
 	address.push_back("rigidbody");
@@ -64,6 +69,15 @@ void OSCSending::send(int ID, const RigidBodyInfo &rb, bool as_bundle)
 	{
 		std::string method = makeOscAddress(address, "location2d");
 		ofVec2f data{location.x, location.y};
+		ofxOscMessage msg;
+		msg.setAddress(method);
+		msg.addFloatArg(data.x);
+		msg.addFloatArg(data.y);
+		procMessage(msg);
+	}
+	{
+		std::string method = makeOscAddress(address, "audioLocation2d");
+		ofVec2f data{ audioLocation.x, audioLocation.y };
 		ofxOscMessage msg;
 		msg.setAddress(method);
 		msg.addFloatArg(data.x);

@@ -8,13 +8,13 @@ void ofApp::setup() {
 	
 	// init NatNet setup
 	// local network device ip addr
-	string localIPAddr = "192.168.100.116";
+	string localIPAddr = "192.168.100.3";
 	natnet.setup(localIPAddr, "192.168.100.3");
 	natnet.setScale(100);
 	natnet.setDuplicatedPointRemovalDistance(20);
 //	natnet.forceSetNatNetVersion(3, 1);
 	
-	oscSender.setupDestinations({{"localhost", 3000}});
+	oscSender.setupDestinations({{"192.168.100.255", 11111}});
 
 	ofSetCircleResolution(180);
 	
