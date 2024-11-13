@@ -20,6 +20,8 @@ void ofApp::setup() {
 	
 	// set ortho cam
 	cam.enableOrtho();
+	cam.setScale(1.8);
+	cam.setPosition(ofVec3f(-600, 0, 0));
 }
 
 void ofApp::getRigidBodyInfoFromNatNet() {
@@ -136,13 +138,11 @@ void ofApp::draw(){
 			ofPushMatrix();
 			{
 				ofTranslate(iter->second.getPosition().x, iter->second.getPosition().y);
-				if (iter->first == 1)	ofSetColor(ofColor::orange);
-				else if (iter->first == 2)	ofSetColor(ofColor::greenYellow);
-				else						ofSetColor(ofColor::cyan);
+				ofSetColor(ofColor::cyan);
 
 				//ofSetColor(255);
 				ofFill();
-				ofDrawCircle(0, 0, 70);
+				ofDrawCircle(0, 0, 10);
 			}
 			ofPopMatrix();
 
@@ -159,7 +159,7 @@ void ofApp::draw(){
 					ofDrawAxis(10);
 
 					ofSetColor(ofColor::fromHex(0xFFFF00));
-					ofDrawBitmapString("[" + ofToString(iter->first) + "]", 20, 0);
+					ofDrawBitmapString("[" + ofToString(iter->first) + "]" + iter->second.getName(),-20, 0);
 				}
 				ofPopStyle();
 			}
