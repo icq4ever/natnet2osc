@@ -8,8 +8,8 @@ void ofApp::setup() {
 	
 	// init NatNet setup
 	// local network device ip addr
-	string localIPAddr = "192.168.100.3";
-	natnet.setup(localIPAddr, "192.168.100.3");
+	string localIPAddr = "127.0.0.1";
+	natnet.setup(localIPAddr, "127.0.0.1");
 	natnet.setScale(100);
 	natnet.setDuplicatedPointRemovalDistance(20);
 //	natnet.forceSetNatNetVersion(3, 1);
@@ -126,8 +126,8 @@ void ofApp::draw(){
 	ofSetColor(ofColor::fromHex(0xFFFF00));
 	ofNoFill();
 	ofSetLineWidth(3);
-	ofRotateZ(45);
-	ofDrawRectangle(-400, -400, 800, 800);
+	ofRotateZ(0);
+	ofDrawRectangle(-600, -600, 1200, 1200);
 	ofPopStyle();
 	ofPopMatrix();
 	// draw rigidBodies
