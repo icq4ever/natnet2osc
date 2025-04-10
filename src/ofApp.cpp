@@ -14,7 +14,7 @@ void ofApp::setup() {
 	natnet.setDuplicatedPointRemovalDistance(20);
 //	natnet.forceSetNatNetVersion(3, 1);
 	
-	oscSender.setupDestinations({{"192.168.100.255", 11111}});
+	oscSender.setupDestinations({{"192.168.100.255", 11112}});
 
 	ofSetCircleResolution(180);
 	
