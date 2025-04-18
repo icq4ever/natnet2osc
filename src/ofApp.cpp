@@ -12,10 +12,8 @@ void ofApp::setup() {
 	natnet.setup(localIPAddr, "127.0.0.1");
 	natnet.setScale(100);
 	natnet.setDuplicatedPointRemovalDistance(20);
-//	natnet.forceSetNatNetVersion(4, 0);
 	
 	oscSender.setupDestinations({{"127.0.0.1", 11111}});
-
 	ofSetCircleResolution(180);
 	
 	// set ortho cam
