@@ -12,9 +12,9 @@ void ofApp::setup() {
 	natnet.setup(localIPAddr, "127.0.0.1");
 	natnet.setScale(100);
 	natnet.setDuplicatedPointRemovalDistance(20);
-//	natnet.forceSetNatNetVersion(3, 1);
+//	natnet.forceSetNatNetVersion(4, 0);
 	
-	oscSender.setupDestinations({{"192.168.100.255", 11111}});
+	oscSender.setupDestinations({{"127.0.0.1", 11111}});
 
 	ofSetCircleResolution(180);
 	
@@ -22,6 +22,8 @@ void ofApp::setup() {
 	cam.enableOrtho();
 	cam.setScale(1.8);
 	cam.setPosition(ofVec3f(-600, 0, 0));
+	cam.setNearClip(1000000);
+	cam.setFarClip(-1000000);
 }
 
 void ofApp::getRigidBodyInfoFromNatNet() {
@@ -132,6 +134,7 @@ void ofApp::draw(){
 	ofDrawRectangle(-600, -600, 1200, 1200);
 	ofPopStyle();
 	ofPopMatrix();
+
 	// draw rigidBodies
 	for (auto iter = rigidBodies.begin(); iter != rigidBodies.end(); iter++) {
 		if (iter->second.getActive()) {
@@ -143,6 +146,9 @@ void ofApp::draw(){
 				//ofSetColor(255);
 				ofFill();
 				ofDrawCircle(0, 0, 10);
+
+				ofSetColor(ofColor::fromHex(0xFFFF00));
+				ofDrawBitmapString("[" + ofToString(iter->first) + "]" + iter->second.getName(), -30, 30);
 			}
 			ofPopMatrix();
 
@@ -158,8 +164,8 @@ void ofApp::draw(){
 
 					ofDrawAxis(10);
 
-					ofSetColor(ofColor::fromHex(0xFFFF00));
-					ofDrawBitmapString("[" + ofToString(iter->first) + "]" + iter->second.getName(),-20, 0);
+					//ofSetColor(ofColor::fromHex(0xFFFF00));
+					//ofDrawBitmapString("[" + ofToString(iter->first) + "]" + iter->second.getName(),-20, 0);
 				}
 				ofPopStyle();
 			}
