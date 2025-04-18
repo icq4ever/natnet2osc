@@ -57,15 +57,16 @@ void OSCSending::send(int ID, const RigidBodyInfo &rb, bool as_bundle)
 
 	std::vector<std::string> address;
 	address.push_back("rigidbody");
-	address.push_back(ofToString(ID));
-	{
-		std::string method = makeOscAddress(address, "name");
-		std::string data{rb.getName()};
-		ofxOscMessage msg;
-		msg.setAddress(method);
-		msg.addStringArg(data);
-		procMessage(msg);
-	}
+	//address.push_back(ofToString(ID));
+	address.push_back(rb.getName());
+	//{
+	//	std::string method = makeOscAddress(address, "name");
+	//	std::string data{rb.getName()};
+	//	ofxOscMessage msg;
+	//	msg.setAddress(method);
+	//	msg.addStringArg(data);
+	//	procMessage(msg);
+	//}
 	{
 		std::string method = makeOscAddress(address, "location2d");
 		ofVec2f data{location.x, location.y};
