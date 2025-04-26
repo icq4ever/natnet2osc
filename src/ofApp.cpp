@@ -1,17 +1,19 @@
 #include "ofApp.h"
 
 //--------------------------------------------------------------
+void ofApp::setupNatNet() {
+	string localIPAddr = "127.0.0.1";
+	natnet.setup(localIPAddr, "127.0.0.1");
+	natnet.setScale(100);
+	natnet.setDuplicatedPointRemovalDistance(20);
+}
+
 void ofApp::setup() {
 	ofSetFrameRate(60);
 	ofSetVerticalSync(true);
 	ofBackground(0);
 	
-	// init NatNet setup
-	// local network device ip addr
-	string localIPAddr = "127.0.0.1";
-	natnet.setup(localIPAddr, "127.0.0.1");
-	natnet.setScale(100);
-	natnet.setDuplicatedPointRemovalDistance(20);
+	setupNatNet();
 	
 	oscSender.setupDestinations({{"127.0.0.1", 11111}});
 	ofSetCircleResolution(180);
@@ -177,7 +179,11 @@ void ofApp::draw(){
 
 //--------------------------------------------------------------
 void ofApp::keyPressed(int key){
-
+	switch(key) {
+		case OF_KEY_RETURN:
+			setupNatNet();
+			break;
+	}
 }
 
 //--------------------------------------------------------------

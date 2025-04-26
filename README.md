@@ -1,3 +1,8 @@
+## Possible Operations
+
+- Press Enter to refresh ofxNatNet connection and RigidBody structure
+
+
 ## OSC ADDR structure example
 
 ```

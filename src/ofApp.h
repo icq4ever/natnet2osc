@@ -32,6 +32,7 @@ public:
 	void sendRigidBodyInformation();
 
 	ofxNatNet natnet;
+	void setupNatNet();
 	ofEasyCam cam;
 	float rotateDeg;
 	ofVec3f pos;
