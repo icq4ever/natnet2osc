@@ -72,6 +72,10 @@ void ofApp::update(){
 	updateRigidBodyInformation();
 	sendRigidBodyInformation();
 
+	if (natnet.needRequestDescription()) {
+		natnet.sendRequestDescription();
+	}
+
 	// get number of RigidBody
 	cout << "num of rigid body : " << natnet.getNumRigidBody() << endl;
 
